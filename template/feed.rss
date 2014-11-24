@@ -1,0 +1,11 @@
+<!-- Include feed_header.rss -->
+<!-- Start Item -->
+    <item>
+        <title>{itemTitle}</title>
+        <link>{itemLink}</link>
+        <description>{itemDescription}</description>
+        <pubDate>{itemPubDate}</pubDate>
+        <guid>{itemGuid}</guid>
+    </item>
+<!-- End Item -->
+<!-- Include feed_footer.rss -->
