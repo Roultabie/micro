@@ -37,9 +37,10 @@ function execScripts($level)
         while (($entry = $list->read()) !== false) {
             if (preg_match('/([^.]+)\.php/Ui', $entry)) {
                 include_once $dirPath . '/' . $entry;
-                $scripts[] = preg_replace('/([^.]+)\.php/Ui', '\1', $entry);
+                $scripts[] = preg_replace('/\d+\-([^.]+)\.php/Ui', '\1', $entry);
             }
         }
+        if (is_array($scripts)) sort($scripts);
         execScripts(0);
     }
 }
@@ -79,6 +80,7 @@ function generate($dirPath = '', $currentDir = '')
                     $object->setInputUri($dirPath . '/' . $entry);
                     $object->setOutputName($outputName);
                     $object->setOutputUri($dirPath . '/' .$outputName);
+                    $object->setOutputLink(str_replace(PUBLIC_PATH, '', $after));
                     // Exec scripts level 2
                     execScripts(2);
                     $stack->addObject($object);
