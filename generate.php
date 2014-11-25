@@ -16,8 +16,10 @@ if (file_exists(SCRIPT_PATH . 'config.php')) include SCRIPT_PATH . 'config.php';
 define('PUBLIC_PATH', (!empty($argv[1])) ? $argv[1] : SCRIPT_PATH . $publicDir);
 define('PUBLIC_BASE', (!empty($argv[2])) ? rtrim($argv[2], '/') : rtrim($publicBase, '/'));
 define('PUBLIC_DIR', (!empty(PUBLIC_BASE)) ? array_pop(explode('/', PUBLIC_BASE)) : $publicDir);
+define('PUBLIC_URL', $publicUrl);
 define('TEMPLATE_PATH', (is_dir(PUBLIC_PATH . '/_' . $templateDir)) ? PUBLIC_PATH . '/_' . $templateDir : SCRIPT_PATH . $templateDir);
 define('REGEN', ($argv[3] === 'regen') ? true : true);
+
 timply::setUri(TEMPLATE_PATH);
 
 function execScripts($level)
@@ -60,6 +62,7 @@ function generate($dirPath = '', $currentDir = '')
     else {
         list($before, $after) = explode(PUBLIC_DIR, $dirPath);
     }
+    $after = ltrim($after, '/');
     $dirPath = PUBLIC_PATH . $after;
     if (is_dir($dirPath)) {
         $noScan      = (is_array($GLOBALS['noScan'])) ? array_merge($GLOBALS['noScan'], array('.', '..')) : array('.', '..');
@@ -80,7 +83,9 @@ function generate($dirPath = '', $currentDir = '')
                     $object->setInputUri($dirPath . '/' . $entry);
                     $object->setOutputName($outputName);
                     $object->setOutputUri($dirPath . '/' .$outputName);
-                    $object->setOutputLink(str_replace(PUBLIC_PATH, '', $after));
+                    $object->setOutputUrlRel('/' . ltrim($after . '/' . $object->getOutputName(), '/'));
+                    $object->setOutputUrlAbs(PUBLIC_URL . $object->getOutputUrlRel());
+                    var_dump($object->getOutputUri());
                     // Exec scripts level 2
                     execScripts(2);
                     $stack->addObject($object);

@@ -9,10 +9,10 @@ function rss3()
     foreach ($stack->getStack() as $key => $object) {
         if (is_object($object)) {
             $template->setElement('itemTitle', $object->getMetas()->title, 'Item');
-            $template->setElement('itemLink', $object->getOutputLink(), 'Item');
+            $template->setElement('itemLink', $object->getOutputUrlAbs(), 'Item');
             $template->setElement('itemDescription', MarkdownExtra::defaultTransform($object->getInputContent()), 'Item');
             $template->setElement('itemPubDate', $date, 'Item');
-            $template->setElement('itemGuid', $object->getOutputLink(), 'Item');
+            $template->setElement('itemGuid', $object->getOutputUrlAbs(), 'Item');
         }
     }
     file_put_contents(PUBLIC_PATH . '/feed.rss', $template->returnHtml());
