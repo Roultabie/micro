@@ -10,9 +10,13 @@ function page2()
     global $stack, $object;
     $template = $object->getTemplate();
     $template->setElement('content', MarkdownExtra::defaultTransform($object->getInputContent()));
+    $template->setElement('pageLinkAbs', $object->getOutputUrlAbs());
+    $template->setElement('pageLinkRel', $object->getOutputUrlRel());
+    $template->setElement('sourceLinkAbs', $object->getInputUrlAbs());
+    $template->setElement('sourceLinkRel', $object->getInputUrlRel());
     $object->setOutputContent($template->returnHtml());
 }
-function page3()
+function page4()
 {
     global $stack;
     foreach ($stack->getStack() as $key => $object) {
