@@ -62,8 +62,8 @@ function generate($dirPath = '', $currentDir = '')
     else {
         list($before, $after) = explode(PUBLIC_DIR, $dirPath);
     }
-    $after = ltrim($after, '/');
-    $dirPath = PUBLIC_PATH . $after;
+    $after   = preg_replace('|/+|', '/', $after . '/');
+    $dirPath = preg_replace('|/+|', '/', PUBLIC_PATH . $after . '/');
     if (is_dir($dirPath)) {
         $noScan      = (is_array($GLOBALS['noScan'])) ? array_merge($GLOBALS['noScan'], array('.', '..')) : array('.', '..');
         $public = dir($dirPath);
@@ -79,13 +79,13 @@ function generate($dirPath = '', $currentDir = '')
                     $object->setPath($dirPath);
                     $object->setDirName($after);
                     $object->setInputName($entry);
-                    $object->setInputContent(file_get_contents($dirPath. '/' . $entry));
-                    $object->setInputUri($dirPath . '/' . $entry);
+                    $object->setInputContent(file_get_contents($dirPath . $entry));
+                    $object->setInputUri($dirPath . $entry);
                     $object->setOutputName($outputName);
-                    $object->setOutputUri($dirPath . '/' .$outputName);
-                    $object->setOutputUrlRel('/' . ltrim($after . '/' . $object->getOutputName(), '/'));
+                    $object->setOutputUri($dirPath . $outputName);
+                    $object->setOutputUrlRel($after . $object->getOutputName());
                     $object->setOutputUrlAbs(PUBLIC_URL . $object->getOutputUrlRel());
-                    var_dump($object->getOutputUri());
+                    var_dump($object->getInputUri());
                     // Exec scripts level 2
                     execScripts(2);
                     $stack->addObject($object);
