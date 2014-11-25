@@ -18,7 +18,7 @@ define('PUBLIC_BASE', (!empty($argv[2])) ? rtrim($argv[2], '/') : rtrim($publicB
 define('PUBLIC_DIR', (!empty(PUBLIC_BASE)) ? array_pop(explode('/', PUBLIC_BASE)) : $publicDir);
 define('PUBLIC_URL', $publicUrl);
 define('TEMPLATE_PATH', (is_dir(PUBLIC_PATH . '/_' . $templateDir)) ? PUBLIC_PATH . '/_' . $templateDir : SCRIPT_PATH . $templateDir);
-define('REGEN', ($argv[3] === 'regen') ? true : true);
+define('REGEN', ($argv[3] === 'regen') ? true : false);
 
 timply::setUri(TEMPLATE_PATH);
 
@@ -87,7 +87,6 @@ function generate($dirPath = '', $currentDir = '')
                     $object->setOutputUri($dirPath . $outputName);
                     $object->setOutputUrlRel($after . $object->getOutputName());
                     $object->setOutputUrlAbs(PUBLIC_URL . $object->getOutputUrlRel());
-                    var_dump($object->getInputUrlAbs());
                     // Exec scripts level 2
                     execScripts(2);
                     $stack->addObject($object);
@@ -102,13 +101,11 @@ function generate($dirPath = '', $currentDir = '')
     if (is_object($stack)) {
         // Exec scripts level 3
         execScripts(3);
-        $level++;
     }
 }
 if (is_dir(PUBLIC_PATH) && file_exists(TEMPLATE_PATH)) {
     generate();
     // Exec scripts level 4
     execScripts(4);
-    $level++;
 }
 ?>
