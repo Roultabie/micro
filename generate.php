@@ -81,11 +81,13 @@ function generate($dirPath = '', $currentDir = '')
                     $object->setInputName($entry);
                     $object->setInputContent(file_get_contents($dirPath . $entry));
                     $object->setInputUri($dirPath . $entry);
+                    $object->setInputUrlRel($after . $object->getInputName());
+                    $object->setInputUrlAbs(PUBLIC_URL . $object->getInputUrlRel());
                     $object->setOutputName($outputName);
                     $object->setOutputUri($dirPath . $outputName);
                     $object->setOutputUrlRel($after . $object->getOutputName());
                     $object->setOutputUrlAbs(PUBLIC_URL . $object->getOutputUrlRel());
-                    var_dump($object->getInputUri());
+                    var_dump($object->getInputUrlAbs());
                     // Exec scripts level 2
                     execScripts(2);
                     $stack->addObject($object);
