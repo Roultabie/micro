@@ -31,7 +31,7 @@ function meta2()
         unset($newMetas);
     }
     // Update object
-    preg_match('/#+(.*)/is', $markdown, $title);
+    preg_match('/#+(.*)/i', $markdown, $title);
     $metas['title'] = (!empty($title[1])) ? $title[1] : $object->getOutputName();
     $object->setMetas((object)$metas);
     $template = $object->getTemplate();
