@@ -14,8 +14,8 @@ class staticObject
 
 class staticStack
 {
-    public $stack;
-    public $nbElements;
+    private $stack;
+    public  $nbElements;
 
     function __construct()
     {
