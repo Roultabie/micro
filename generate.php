@@ -45,7 +45,6 @@ function execScripts($level)
                 $scripts[] = preg_replace('/\d+\-([^.]+)\.php/Ui', '\1', $entry);
             }
         }
-        if (is_array($scripts)) sort($scripts);
         execScripts(0);
     }
 }
