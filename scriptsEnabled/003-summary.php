@@ -37,7 +37,7 @@ function summary2()
                 if (strpos($value, '<a name') === false) {
                     $anchor = $sanitize($value);
                     $list .= $level . '.  [' .trim($value) . '](#' . $anchor . '),' . PHP_EOL;
-                    $markdown = str_replace($matches[0][$key], $matches[1][$key] . '<a name="' . $anchor . '"></a>' . $value, $markdown);
+                    $markdown = preg_replace('/' . $matches[0][$key] . '/', $matches[1][$key] . '<a name="' . $anchor . '"></a>' . $value, $markdown, 1);
                     $level++;
                 }
             }
