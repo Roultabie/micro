@@ -30,7 +30,7 @@ function execScripts($level)
     global $scripts;
     if (is_array($scripts)) {
         foreach ($scripts as $script) {
-            $function = $script . $level;
+            $function = preg_replace('/\d+\-([^.]+)\.php/Ui', '\1', $script) . $level;
             if (function_exists($function)) {
                 $function();
             }
@@ -42,8 +42,11 @@ function execScripts($level)
         while (($entry = $list->read()) !== false) {
             if (preg_match('/([^.]+)\.php/Ui', $entry)) {
                 include_once $dirPath . '/' . $entry;
-                $scripts[] = preg_replace('/\d+\-([^.]+)\.php/Ui', '\1', $entry);
+                $scripts[] = $entry;
             }
+        }
+        if (is_array($scripts)) {
+            sort($scripts);
         }
         execScripts(0);
     }
