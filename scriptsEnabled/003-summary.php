@@ -5,7 +5,7 @@ function summary2()
     $markdown = $object->getInputContent();
     $html     = $object->getOutputContent();
     //define options
-    $titlePattern   = (!empty($GLOBALS['summaryTitlePattern'])) ? $GLOBALS['summaryTitlePattern'] : '/(###\s*)(.*)/i';
+    $titlePattern   = (!empty($GLOBALS['summaryTitlePattern'])) ? $GLOBALS['summaryTitlePattern'] : '/^(###\s*)(.*)$/mi';
     $summaryPattern = (!empty($GLOBALS['summaryName'])) ? $GLOBALS['summaryName'] : '/(###\s*)(summary)/i';
     $sanitize       = function($string) {
                           $string = mb_strtolower($string);
